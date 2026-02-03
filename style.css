@@ -1,0 +1,397 @@
+/* style.css - DESI VIBE & FUNCTIONAL MERGE */
+
+:root {
+    --primary: #e63946;  /* Chili Red */
+    --gold: #ffb703;     /* Street Light Gold */
+    --dark-overlay: rgba(0, 0, 0, 0.85);
+    --glass: rgba(20, 20, 20, 0.9); /* Slightly darker for readability */
+    --text: #ffffff;
+    --font-head: 'Oswald', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background-color: #111;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+/* --- BACKGROUND IMAGES --- */
+body.home-page { background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/bg-home.jpg'); }
+body.menu-page { background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('assets/images/bg-menu.png'); }
+body.about-page { background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('assets/images/bg-about.jpg'); }
+body.cart-page { background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('assets/images/bg-cart.png'); }
+
+/* --- HEADER & NAV --- */
+header {
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 15px 0;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.logo {
+    font-family: var(--font-head);
+    font-size: 1.8rem;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.logo span { color: var(--primary); }
+.nav-links a {
+    color: #ccc;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+/* CART BADGE (Crucial for JS) */
+.cart-icon { position: relative; }
+#cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: var(--gold);
+    color: black;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 50%;
+    min-width: 18px;
+    text-align: center;
+    display: none; /* JS toggles this */
+}
+
+/* --- ANIMATIONS --- */
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(230, 57, 70, 0); } 100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); } }
+@keyframes shine { to { background-position: 200% center; } }
+
+.animate-load { animation: slideUp 0.8s ease-out forwards; }
+
+/* --- HERO TEXT (Desi Style) --- */
+.hero-title {
+    font-size: 3rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+.highlight-text {
+    display: block;
+    font-size: 4rem;
+    font-weight: 800;
+    margin-top: 5px;
+    background: linear-gradient(45deg, var(--gold), var(--primary), var(--gold));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(230, 57, 70, 0.8));
+    animation: shine 3s linear infinite;
+}
+
+/* --- LAYOUT UTILS --- */
+.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+h2, .section-title {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--gold);
+}
+
+/* --- BUTTONS --- */
+.btn, .menu-btn, .btn-whatsapp {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.2s, background 0.2s;
+    text-align: center;
+    width: 100%; /* Mobile first */
+}
+.btn:hover, .menu-btn:hover {
+    transform: scale(1.05);
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 0 15px var(--primary);
+}
+.btn.added { background-color: #25D366 !important; color: white !important; }
+
+/* --- MENU GRID --- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+.menu-item {
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+.menu-item:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+}
+
+/* Image Optimization (Prevents Layout Shift) */
+.item-img-container {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: #222; /* Dark Skeleton */
+    position: relative;
+    overflow: hidden;
+}
+.item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+.menu-item:hover .item-img { transform: scale(1.05); }
+
+.item-details { padding: 20px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; }
+.item-details h3 { font-family: var(--font-head); font-size: 1.5rem; margin-bottom: 5px; }
+.item-desc { font-size: 0.9rem; color: #ccc; margin-bottom: 15px; flex-grow: 1; }
+
+.price-row { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; }
+.price { color: var(--gold); font-size: 1.4rem; font-weight: bold; }
+
+/* Dropdowns & Inputs */
+input, select, textarea, .custom-select, .form-control {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid #444;
+    color: white;
+    border-radius: 8px;
+    font-family: var(--font-body);
+}
+option { background: #111; color: white; }
+
+/* --- CART PAGE STYLES --- */
+.cart-item {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.summary-card {
+    background: var(--glass);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-top: 30px;
+}
+.summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: #ddd; }
+.summary-row.total { border-top: 1px solid #444; padding-top: 15px; font-size: 1.3rem; color: var(--gold); }
+.remove-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1.2rem; }
+
+/* --- TOAST NOTIFICATION --- */
+#toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: var(--gold);
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 50px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+}
+#toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+@keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+@keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+/* --- FOOTER --- */
+footer {
+    background: rgba(0,0,0,0.9);
+    text-align: center;
+    padding: 40px 20px 20px;
+    margin-top: 50px;
+    border-top: 1px solid #333;
+}
+.footer-socials a { color: white; margin: 0 15px; font-size: 1.5rem; transition: color 0.3s; }
+.footer-socials a:hover { color: var(--gold); }
+.copyright { color: #666; font-size: 0.8rem; margin-top: 20px; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+    .highlight-text { font-size: 3rem; }
+    .hero-title { font-size: 2rem; }
+    .cart-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .item-actions { width: 100%; display: flex; justify-content: space-between; }
+}
+/* --- FIX: COLORS & CONTRAST UPDATE --- */
+
+/* 1. Navigation Links (The "Sub Menus") */
+.nav-links a {
+    color: #eeeeee; /* Bright White-Gray by default */
+    font-weight: 500;
+}
+
+/* Make the active link and hover state GOLD (High Contrast) */
+.nav-links a:hover, 
+.nav-links a.active {
+    color: var(--gold); 
+    text-shadow: 0 0 10px rgba(255, 183, 3, 0.5); /* Glowing effect */
+}
+
+/* 2. Logo Colors */
+.logo { color: white; }
+.logo span { color: var(--gold); } /* "Point" is now Gold */
+
+/* 3. Buttons (View Menu, Add to Cart) */
+.btn, .menu-btn {
+    background-color: var(--primary); /* Red Background */
+    color: white !important;          /* FORCE White Text */
+    border: 1px solid var(--primary);
+}
+
+/* Button Hover State */
+.btn:hover, .menu-btn:hover {
+    background-color: var(--gold);    /* Turns Gold on hover */
+    color: black !important;          /* Text turns Black (Easy to read on Gold) */
+    border-color: var(--gold);
+    box-shadow: 0 0 15px var(--gold); /* Gold Glow */
+    transform: translateY(-3px);
+}
+
+/* 4. Fix for Dropdown Menus (The "Select" options) */
+select, option {
+    background-color: #222;
+    color: white;
+}
+/* When you click the dropdown, ensure options are readable */
+select:focus {
+    border-color: var(--gold);
+    outline: none;
+}
+/* --- FIX: DROPDOWN & INPUT VISIBILITY --- */
+
+/* Force all inputs and dropdowns to be White with Black Text */
+select, .custom-select, input, textarea {
+    background-color: #ffffff !important; /* Bright White Background */
+    color: #000000 !important;            /* Pitch Black Text */
+    border: 2px solid #ccc !important;    /* Grey Border */
+    font-weight: bold;
+}
+
+/* Fix for the specific items inside the dropdown list */
+option {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Add a Gold border when you click it so it looks nice */
+select:focus, input:focus, textarea:focus {
+    border-color: var(--primary) !important;
+    outline: none;
+}
+/* --- FIX: ABOUT PAGE & TESTIMONIALS --- */
+
+/* 1. Fix the Main White Boxes (Glass Cards) */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #222 !important;  /* Force Dark Text */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* 2. Fix Headings inside the boxes */
+.glass-card h1, 
+.glass-card h2, 
+.glass-card h3,
+.section-title {
+    color: #000 !important; /* Force Black Headings */
+    border-bottom-color: var(--primary) !important;
+}
+
+/* 3. Fix Paragraph text */
+.glass-card p {
+    color: #444 !important;
+}
+
+/* 4. Fix the Customer Reviews (Testimonials) */
+.review-card {
+    background: #f4f4f4 !important; /* Light Grey background for reviews */
+    color: #333 !important;
+    border: 1px solid #ddd;
+}
+
+.review-card p {
+    color: #333 !important;
+}
+
+.reviewer {
+    color: #000 !important;
+    font-weight: bold;
+}
+/* --- FIX: INFO CARDS (Hours, Location, Call Us) --- */
+.info-card {
+    background: rgba(255, 255, 255, 0.95); /* Bright White Background */
+    color: #222 !important;  /* FORCE Text to be Dark Gray */
+    border-bottom: 4px solid var(--primary);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Make the Headings (Opening Hours, etc.) Black */
+.info-card h3 {
+    color: #000 !important;
+    margin-bottom: 10px;
+}
+
+/* Make the Icons Red */
+.info-card .info-icon {
+    color: var(--primary) !important;
+}
+
+/* Make the small text (Address, Phone) Dark Gray */
+.info-card p {
+    color: #444 !important;
+}
+
+/* Make the 'Order on WhatsApp' link readable */
+.info-card a {
+    color: var(--primary) !important;
+    font-weight: bold;
+}

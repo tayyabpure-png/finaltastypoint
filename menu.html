@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Tasty Point</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* 1. Image Optimization & Skeletons */
+        .item-img-container {
+            width: 100%;
+            aspect-ratio: 1/1; /* Prevents layout shift */
+            background-color: #eee; /* Skeleton loading state */
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures images don't stretch */
+            transition: transform 0.3s ease;
+        }
+        .menu-item:hover .item-img {
+            transform: scale(1.05);
+        }
+
+        /* 2. Categorization Headers */
+        .category-header {
+            width: 100%;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid var(--primary, #ffae00);
+            padding-bottom: 10px;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* 3. Improved Typography & Descriptions */
+        .item-details {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .item-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .dietary-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* 4. UX: Price & Touch Targets */
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 1.2rem;
+            color: #d32f2f; /* Brand Red */
+            font-weight: 700;
+        }
+        .menu-btn {
+            width: 100%;
+            padding: 12px; /* Min height 44px for touch */
+            background: var(--primary, #ffae00);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .menu-btn:active {
+            transform: scale(0.98);
+        }
+        .menu-btn.added {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* 5. Customization UI */
+        .custom-select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        /* 6. Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 17px;
+        }
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+
+<body class="menu-page">
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Tasty<span style="color:var(--primary, #ffae00)">Point</span></a>
+            <div class="nav-links">
+                <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
+                <a href="menu.html" title="Menu" class="active"><i class="fas fa-utensils"></i></a>
+                <a href="about.html" title="About"><i class="fas fa-info-circle"></i></a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container animate-load">
+        <h2 style="color: var(--gold, #ffae00); text-align: center; margin-bottom: 10px;">Our Menu</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">Freshly prepared, hot, and delicious.</p>
+        
+        <h3 class="category-header"><i class="fas fa-hamburger"></i> Burgers</h3>
+        <div class="menu-grid">
+            
+            <div class="menu-item">
+                <div class="item-img-container">
+                    <span class="dietary-badge"><i class="fas fa-fire"></i> Spicy</span>
+                    <img src="assets/images/zinger.png" alt="Crispy Zinger Burger" class="item-img" loading="lazy">
+                </div>
+                <div class="item-details">
+                    <h3>Crispy Zinger</h3>
+                    <p class="item-desc">Crunchy chicken thigh fillet, spicy mayo, fresh lettuce, and cheese slice in a sesame bun.</p>
+                    
+                    <select class="custom-select" id="opt-1">
+                        <option value="single">Single Burger</option>
+                        <option value="meal">Make it a Meal (+150 Rs)</option>
+                    </select>
+
+                    <div class="price-row">
+                        <span class="price">300 Rs</span>
+                    </div>
+                    <button class="menu-btn" onclick="addToCartUI(this, 1, 'Zinger Burger', 300)">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-img-container">
+                    <img src="assets/images/shami.png" alt="Anda Shami Burger" class="item-img" loading="lazy">
+                </div>
+                <div class="item-details">
+                    <h3>Anda Shami Burger</h3>
+                    <p class="item-desc">Traditional lentil & beef patty topped with a fluffly omelet, onions, and mint chutney.</p>
+                    
+                    <select class="custom-select" id="opt-2">
+                        <option value="normal">Normal</option>
+                        <option value="double">Double Egg (+40 Rs)</option>
+                    </select>
+
+                    <div class="price-row">
+                        <span class="price">130 Rs</span>
+                    </div>
+                    <button class="menu-btn" onclick="addToCartUI(this, 2, 'Anda Shami', 130)">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="category-header"><i class="fas fa-scroll"></i> Wraps & Rolls</h3>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <div class="item-img-container">
+                    <img src="assets/images/shawarma.png" alt="Chicken Shawarma" class="item-img" loading="lazy">
+                </div>
+                <div class="item-details">
+                    <h3>Chicken Shawarma</h3>
+                    <p class="item-desc">Grilled chicken chunks, pickled cucumbers, garlic sauce, and fries wrapped in pita bread.</p>
+                    
+                    <select class="custom-select" id="opt-3">
+                        <option value="mild">Mild Sauce</option>
+                        <option value="spicy">Spicy Sauce</option>
+                    </select>
+
+                    <div class="price-row">
+                        <span class="price">170 Rs</span>
+                    </div>
+                    <button class="menu-btn" onclick="addToCartUI(this, 3, 'Shawarma', 170)">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-img-container">
+                    <span class="dietary-badge">New</span>
+                    <img src="assets/images/platter.png" onerror="this.src='https://placehold.co/400x400?text=Platter'" alt="Shawarma Platter" class="item-img" loading="lazy">
+                </div>
+                <div class="item-details">
+                    <h3>Shawarma Platter</h3>
+                    <p class="item-desc">Open-faced serving of shawarma chicken, fresh salad, two pita breads and special hummus.</p>
+                    <div class="price-row">
+                        <span class="price">350 Rs</span>
+                    </div>
+                    <button class="menu-btn" onclick="addToCartUI(this, 4, 'Shawarma Platter', 350)">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast">Item added to cart!</div>
+
+    <script src="script.js"></script>
+    
+    <script>
+        // Wrapper function to handle UI feedback + Actual Logic
+        function addToCartUI(btnElement, id, name, price) {
+            
+            // 1. Call your existing logic (Assuming addToCart exists in script.js)
+            // If addToCart isn't defined yet, we prevent error
+            if (typeof addToCart === "function") {
+                addToCart(id, name, price); 
+            } else {
+                // Fallback for demo if script.js is empty
+                let countEl = document.getElementById('cart-count');
+                let current = parseInt(countEl.innerText);
+                countEl.innerText = current + 1;
+                console.log("Added " + name);
+            }
+
+            // 2. Button Feedback
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = '<i class="fas fa-check"></i> Added!';
+            btnElement.classList.add('added');
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                btnElement.innerHTML = originalText;
+                btnElement.classList.remove('added');
+            }, 2000);
+
+            // 3. Show Toast Notification
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            toast.innerText = `${name} added to cart!`;
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</body>
+</html>

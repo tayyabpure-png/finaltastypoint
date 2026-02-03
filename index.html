@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Best Fast Food in Daska. Zinger, Shami, and Shawarma at Tasty Point. Order online for pickup or delivery!">
+    <title>Tasty Point - Best Fast Food in Daska</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Hero Badge */
+        .status-badge {
+            background-color: #25D366;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Top Pick Card Enhancements */
+        .top-pick-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin: 0 auto;
+            max-width: 450px;
+            position: relative;
+        }
+        .favorite-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #d32f2f;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+            padding: 0 20px;
+        }
+        .info-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary, #ffae00);
+        }
+        .info-icon { font-size: 2rem; color: var(--primary, #ffae00); margin-bottom: 15px; }
+
+        /* Cart Badge Fix */
+        .cart-icon { position: relative; }
+        #cart-count {
+            position: absolute; top: -8px; right: -8px;
+            background-color: #d32f2f; color: white;
+            font-size: 0.7rem; font-weight: bold;
+            padding: 2px 6px; border-radius: 50%; min-width: 18px; text-align: center;
+        }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 17px;
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+
+<body class="home-page"> 
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Tasty<span style="color:var(--primary, #ffae00)">Point</span></a>
+            <div class="nav-links">
+                <a href="index.html" class="active"><i class="fas fa-home"></i></a>
+                <a href="menu.html"><i class="fas fa-utensils"></i></a>
+                <a href="about.html"><i class="fas fa-info-circle"></i></a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container animate-load" style="text-align: center; padding-top: 15vh; padding-bottom: 50px;">
+        <span class="status-badge"><i class="fas fa-clock"></i> Open Now: 12PM - 2AM</span>
+        
+        <h1 class="hero-title" style="font-size: 3rem; line-height: 1.1; margin-bottom: 10px; color:white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+            Real Street Spice of
+            <span style="color: var(--primary, #ffae00); display:block; font-size: 4rem;">DASKA</span>
+        </h1>
+        
+        <p style="font-size: 1.2rem; margin-bottom: 35px; color: #eee; max-width: 600px; margin-left: auto; margin-right: auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);">
+            Hot Zinger. Authentic Shami. Sizzling Shawarma.<br>Fresh from the cart at Civil Hospital Road.
+        </p>
+        
+        <a href="menu.html" class="btn" style="font-size: 1.2rem; padding: 15px 40px; background: var(--primary, #ffae00); color: black; font-weight: bold; border-radius: 50px; text-decoration: none;">
+            VIEW MENU <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+        </a>
+    </div>
+
+    <div class="container animate-load" style="margin-top: 20px; padding-bottom: 50px;">
+        <h2 style="color: var(--primary, #ffae00); text-align: center; margin-bottom: 30px; text-shadow: 1px 1px 2px black;">Today's Top Pick</h2>
+        
+        <div class="top-pick-card">
+            <span class="favorite-tag">#1 Best Seller</span>
+            
+            <div style="height: 300px; background: #eee; overflow: hidden;">
+                <img src="assets/images/zinger.png" alt="Zinger Burger" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            
+            <div class="item-details" style="padding: 25px; text-align: center;">
+                <h3 style="font-size: 1.8rem; margin: 0 0 10px 0;">The Zinger Special</h3>
+                <p style="color: #666; margin-bottom: 15px;">Crispy, spicy chicken thigh loaded with our secret street sauce and cheese.</p>
+                <div style="font-size: 1.5rem; color: #d32f2f; font-weight: bold; margin-bottom: 15px;">300 Rs</div>
+                
+                <button class="btn" onclick="addToCartUI(this, 1, 'Zinger Burger', 300)" style="width: 100%; padding: 12px; background: #222; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                    <i class="fas fa-cart-plus"></i> ADD TO CART
+                </button>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <i class="fas fa-clock info-icon"></i>
+                <h3>Opening Hours</h3>
+                <p>Mon - Sun: 12:00 PM - 2:00 AM</p>
+                <p style="color: #25D366; font-weight: bold;">We are open!</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-map-pin info-icon"></i>
+                <h3>Location</h3>
+                <p>Near Civil Hospital Road</p>
+                <p>Daska, Punjab</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-phone-alt info-icon"></i>
+                <h3>Call Us</h3>
+                <p>0316-0050548</p>
+                <a href="https://wa.me/923160050548" style="color: var(--primary, #ffae00); text-decoration: none;">Order on WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: #222; color: #fff; padding: 40px 20px 20px; margin-top: 50px; text-align: center;">
+        <div class="footer-content">
+            <h3 style="font-family:'Oswald', sans-serif;">Tasty Point</h3>
+            <p>Fresh. Spicy. Local.</p>
+            <div class="footer-socials" style="margin: 20px 0;">
+                <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="copyright" style="font-size: 0.8rem; color: #777;">
+                © 2024 Tasty Point. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast">Item added to cart!</div>
+
+    <script src="script.js"></script>
+
+    <script>
+        function addToCartUI(btnElement, id, name, price) {
+            if (typeof addToCart === "function") {
+                addToCart(id, name, price); 
+            } else {
+                let countEl = document.getElementById('cart-count');
+                countEl.innerText = parseInt(countEl.innerText) + 1;
+            }
+
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = '<i class="fas fa-check"></i> Added!';
+            btnElement.style.backgroundColor = "#4CAF50";
+            
+            setTimeout(() => {
+                btnElement.innerHTML = originalText;
+                btnElement.style.backgroundColor = "#222";
+            }, 2000);
+
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</body>
+</html>

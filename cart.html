@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Tasty Point</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* 1. Empty State Styling */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            display: none; /* Toggled via JS */
+        }
+        .empty-icon {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        /* 2. Cart Layout */
+        .cart-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .item-info h4 { margin: 0; color: #333; }
+        .item-info small { color: #666; }
+        .item-actions { display: flex; align-items: center; gap: 15px; }
+        .remove-btn { color: #d32f2f; cursor: pointer; border: none; background: none; }
+
+        /* 3. Summary & Form */
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .summary-row.total {
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #d32f2f;
+        }
+        
+        /* 4. Form Improvements */
+        .form-section { margin-top: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #333; font-weight: 600; }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .required-star { color: red; }
+        
+        /* 5. Buttons */
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-whatsapp:disabled { background-color: #ccc; cursor: not-allowed; }
+        .btn-secondary {
+            display: inline-block;
+            background: #eee;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Footer Fix */
+        footer { background: #222; color: #fff; padding: 40px 20px 20px; margin-top: 50px; text-align: center; }
+        .footer-socials a { color: white; margin: 0 10px; }
+        .copyright { font-size: 0.8rem; color: #777; margin-top: 20px; }
+        
+        /* Cart Badge Fix */
+        .cart-icon { position: relative; }
+        #cart-count {
+            position: absolute; top: -8px; right: -8px;
+            background-color: #d32f2f; color: white;
+            font-size: 0.7rem; font-weight: bold;
+            padding: 2px 6px; border-radius: 50%; min-width: 18px; text-align: center;
+        }
+    </style>
+</head>
+
+<body class="cart-page">
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Tasty<span style="color:var(--primary, #ffae00)">Point</span></a>
+            <div class="nav-links">
+                <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
+                <a href="menu.html" title="Menu"><i class="fas fa-utensils"></i></a>
+                <a href="about.html" title="About"><i class="fas fa-info-circle"></i></a>
+                <a href="cart.html" class="cart-icon active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container animate-load cart-container">
+        
+        <h2 class="section-title" style="border-bottom: 3px solid #ffae00; display:inline-block; margin-bottom: 30px; font-family:'Oswald', sans-serif;">Your Cart</h2>
+
+        <div id="empty-state" class="empty-state">
+            <i class="fas fa-shopping-basket empty-icon"></i>
+            <h3>Your cart is empty!</h3>
+            <p style="color: #777; margin-bottom: 20px;">Looks like you haven't added any delicious food yet.</p>
+            <a href="menu.html" class="btn" style="background: #ffae00; color: #000; padding: 12px 25px; border-radius: 4px; text-decoration: none; font-weight: bold;">Browse Menu</a>
+        </div>
+
+        <div id="cart-content">
+            
+            <div id="cart-items-container">
+                <div class="cart-item">
+                    <div class="item-info">
+                        <h4>Zinger Burger</h4>
+                        <small>Price: 300 Rs</small>
+                    </div>
+                    <div class="item-actions">
+                        <span>x 1</span>
+                        <strong>300 Rs</strong>
+                        <button class="remove-btn"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="menu.html" class="btn-secondary" style="margin-top: 15px;">&larr; Add More Items</a>
+
+            <div class="summary-card">
+                <h3 style="font-family:'Oswald', sans-serif; margin-bottom: 20px;">Order Summary</h3>
+                
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal-price">300 Rs</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span id="delivery-price">0 Rs</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="total-price">300 Rs</span>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Name <span class="required-star">*</span></label>
+                        <input type="text" id="customer-name" class="form-control" placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Order Type <span class="required-star">*</span></label>
+                        <select id="order-type" class="form-control" onchange="toggleAddress()">
+                            <option value="pickup">Pickup (Self Collection)</option>
+                            <option value="delivery">Home Delivery (+50 Rs)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="address-group" style="display:none;">
+                        <label>Delivery Address <span class="required-star">*</span></label>
+                        <textarea id="customer-address" class="form-control" rows="2" placeholder="Street, House No, nearby landmark..."></textarea>
+                    </div>
+                    
+                    <p style="font-size: 0.8rem; color: #777; margin-bottom: 15px;">
+                        <i class="fas fa-lock"></i> We only use your info for order delivery.
+                    </p>
+
+                    <button class="btn-whatsapp" onclick="checkout()">
+                        <i class="fab fa-whatsapp"></i> Send Order via WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Tasty Point</h3>
+            <p>Fresh. Spicy. Local.</p>
+            <div class="footer-socials">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <div class="copyright">
+                © 2024 Tasty Point. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    
+    <script>
+        function toggleAddress() {
+            const orderType = document.getElementById('order-type').value;
+            const addressGroup = document.getElementById('address-group');
+            const deliveryPriceEl = document.getElementById('delivery-price');
+            
+            if (orderType === 'delivery') {
+                addressGroup.style.display = 'block';
+                deliveryPriceEl.innerText = "50 Rs";
+                // Logic to update total would go here in main script
+            } else {
+                addressGroup.style.display = 'none';
+                deliveryPriceEl.innerText = "0 Rs";
+            }
+        }
+    </script>
+</body>
+</html>
